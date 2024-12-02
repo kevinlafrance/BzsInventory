@@ -16,3 +16,12 @@ mongoose.connect(
     }
 );
 
+app.get('/', (req, res) => {
+    Engine.find({}, (err, found) => {
+        if (!err) {
+            res.send(found);
+        }
+        console.log(err);
+        res.send("Some error occured!")
+    }).catch(err => console.log("Error occured, " + err));
+});
