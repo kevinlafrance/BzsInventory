@@ -12,7 +12,7 @@ const HomeScreen = () => {
     return (
         <View style={{flex: 1, justifyContent:'center', alignItems:'center'}} >
             <Text> Bienvenue sur les inventaires numériques de Béziers </Text>
-            <Button title="Commencer" onPress={() => navigation.navigate('Inventaires')}/>
+            <Button title="S'identifier" onPress={() => navigation.navigate('Identification')}/>
         </View>
     )
 }
