@@ -75,29 +75,29 @@ const IdentificationScreen = () => {
             return
         }
 
-        const userData = {
+        const body = {
             email: userEmail,
         }
-        JSON.stringify(userData);
+        JSON.stringify(body);
 
         setLoading(true);
 
-        axios.post("https://localhost:5001/user/login", userData)
+        axios.post("http://localhost:5000/auth/login", body)
         .then((response) => {
             setLoading(false);
             if (response.status === 201 ) {
                 console.log(response)
                 const userInfo = {
-                   email: response.data.email,
-                   firstname: response.data.firstname,
-                   lastname: response.data.lastname,
-                   id: response.data.id
+                   email: response.data.candidate.email,
+                   firstname: response.data.candidate.firstname,
+                   lastname: response.data.candidate.lastname,
+                   id: response.data.candidate._id
                  }
-                 AsyncStorage.setItem('user_id', response.data.id);
-
-                 navigation.push('Inventaires', { params: response.data.id});
+                 AsyncStorage.setItem('user_id', response.data.candidate._id);
+                 console.log(response.data.candidate)
+                 navigation.push('Inventaires', { params: response.data.candidate});
                 } else {
-                    setErrorText(response.data.message);
+                    setErrorText(response.data);
                     console.log('Please check your email id or password');
                   }
             })
@@ -122,10 +122,6 @@ const IdentificationScreen = () => {
                autoCapitalize="none"
                keyboardType="email-address"
                returnKeyType="next"
-               onSubmitEditing={() =>
-                 passwordInputRef.current &&
-                 passwordInputRef.current.focus()
-               }
                underlineColorAndroid="#f000"
                  blurOnSubmit={false}
                />

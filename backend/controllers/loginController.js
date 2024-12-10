@@ -1,14 +1,19 @@
-const authService = require("../services/login");
+const User = require("../models/UserSchema");
 
 async function login(req, res) {
-    try {
-        const { email } = req.body; 
-        const token = await authService.login(email)
-        res.token({ token: token })
-    } catch (error) {
-        res.status(401).json({message: "invalid"})
-    }
-}
+
+        const email = req.body.email
+
+        const candidate = await User.findOne({email : email});
+
+        if (candidate) {
+            console.log(candidate)
+            return res.status(201).json({candidate : candidate});
+
+        } 
+            return res.json({message :"c'est pas bon !"})
+  
+} 
 
 module.exports = {
     login
